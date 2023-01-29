@@ -1,0 +1,69 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block head %}
+
+{% endblock head %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12 mb-3">
+      <div class="card">
+        <div class="card-header">
+          <span><i class="bi bi-table me-2"></i></span>
+          <span class="text-uppercase">Materias -</span>
+          <span class="text-uppercase">{{ user }}</span>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table
+              id="example"
+              class="table table-striped data-table"
+              style="width: 100%"
+            >
+              <thead>
+                <tr>
+                  <th>Materia</th>
+                  <th>Grupo</th>
+                  <th>Profesor</th>
+                  <th>Fecha de creación</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for materia in materias %}
+                <tr>
+                  <td><a class="text-decoration-none" href="{% url 'prestamo:prestamo' materia.url %}">{{ materia.nombre }}</a> </td>
+                  <td>{{ materia.grupo }}</td>
+                  <td>{{ materia.profesor }}</td>
+                  <td>{{ materia.fecha }}</td>
+                  <td>
+                    <a data-bs-toggle="modal" href="#exampleModalToggle" role="button" class="text-decoration-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                      </svg>
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Materia</th>
+                  <th>Grupo</th>
+                  <th>Profesor</th>
+                  <th>Fecha de creación</th>
+                  <th>Acción</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

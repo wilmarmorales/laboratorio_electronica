@@ -1,0 +1,198 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'css/select2-bootstrap-5-theme.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}" />
+
+{% if '/prestamo/' != request.path and '/prestamo/all/' != request.path %}
+<script type="text/javascript">
+$(function() {
+    const myModal = document.getElementById('modal-activar')
+    myModal.click()
+    });
+</script>
+{% endif %}
+{% endblock head %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12 mb-3">
+      <div class="card">
+        <div class="card-header">
+          <span><i class="bi bi-table me-2"></i></span>
+          <a class="btn btn-primary btn-sm me-2" id="modal-activar" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Registrar Prestamo</a>
+          <span class="text-uppercase">{{ user }}</span>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table
+              id="example"
+              class="table table-striped data-table"
+              style="width: 100%"
+            >
+              <thead>
+                <tr>
+                  <th>Estudiante</th>
+                  <th>Equipo</th>
+                  <th>Materia</th>
+                  <th>Fecha Prestamo</th>
+                  {% if '/prestamo/all/' == request.path %}
+                  <th>Fecha entrega</th>
+                  {% endif %}
+                  <th>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                      <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                    </svg>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if prestamo %}
+                  {% for prestamo in prestamos %}
+                    <tr>
+                      <td>{{ prestamo.estudiante }}</td>
+                      <td>{{ prestamo.equipo }}</td>
+                      <td>{{ prestamo.materia }}</td>
+                      <td>{{ prestamo.fecha_creado }}</td>
+                      {% if '/prestamo/all/' == request.path %}
+                      <td>{{ prestamo.fecha }}</td>
+                      {% endif %}
+                      <td>
+                        {% if prestamo.entregado == True %}
+                        <a class="link-success text-decoration-none" onclick="alercta_eliminar('{{ prestamo.estudiante }}',{{ prestamo.id }}, '{{ prestamo.equipo }}')" role="button">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                          </svg>
+                        </a>
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                {% endif %}
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Estudiante</th>
+                  <th>Equipo</th>
+                  <th>Materia</th>
+                  <th>Fecha Prestamo</th>
+                  {% if '/prestamo/all/' == request.path %}
+                  <th>Fecha entrega</th>
+                  {% endif %}
+                  <th>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                      <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                    </svg>
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal form  -->
+  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel", tabindex: "null">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Registrar Equipo</h1>
+        <a {% if '/prestamo/' != request.path %} onclick="reset_form_x()"{% endif %} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+      </div>
+      <div class="modal-body">
+        <!-- formulario Crear Equipo -->
+        <form method="post" id="formulario-equipo"
+              action="
+              {% if '/prestamo/' == request.path %}
+                {% url 'prestamo:registrar' %}
+              {% elif '/prestamo/all/' == request.path %}
+                {% url 'prestamo:registrar' %}
+              {% else %}
+                {{ request.path }}
+              {% endif %}">{% csrf_token %}
+          <div class="mb-3">
+            {{ form.estudiante.errors }}
+            <label for="estudiante" class="form-label">Estudiante:</label>
+            {% comment %} <input class="form-control" list="student" id="estudiante" placeholder="Selec estudent..."> {% endcomment %}
+            {{ form.estudiante }}
+            <datalist id='student'>
+              {% for estudiante in estudiantes %}
+                <option value="{{ estudiante.id }}">{{ estudiante }}</option>
+              {% endfor %}
+            </datalist> 
+          </div>
+          <div class="mb-3">
+            {{ form.equipo.errors }}
+            <label for="Equipo" class="form-label">Equipo:</label>
+            {% comment %} <input class="form-control" list="equipos" id="Equipo" placeholder="Selec equipo..."> {% endcomment %}
+            {{ form.equipo }}
+            <datalist id='equipos'>
+              {% for equipo in equipos %}
+                {% comment %} <option value='{{ equipo }}'></option> {% endcomment %}
+                <option value="{{ equipo.id }}">{{ equipo }}</option>
+              {% endfor %}
+            </datalist> 
+          </div>
+          <div class="mb-3">
+            {{ form.materia.errors }}
+            <label for="materia" class="form-label">Materia:</label>
+            {% comment %} <input class="form-control" list="materias" id="Materia" placeholder="Selec materia..."> {% endcomment %}
+            {{ form.materia }}
+            <datalist id='materias'>
+              {% for materia in materias %}
+                <option value="{{ materia.id }}">{{ materia }}</option>
+              {% endfor %}
+            </datalist> 
+          </div>
+          {% comment %} {{ form }} {% endcomment %}
+
+          <div class="mb-3">
+            <input type="submit" class="form-control" value="Registrar" >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function reset_form_x(){
+    window.location.href = "{% url 'prestamo:prestamo' %}"
+}
+
+function alercta_eliminar(nombre, id, equipo){
+  swal({
+  title: "Realizar entrega?",
+  text: "El estudiante " + nombre + ", esta entregando el equipo " + equipo,
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal(nombre +" Eliminado", {
+      icon: "success",
+    });
+    window.location.href = "entrega/" + id + "/"
+  }
+
+});
+}
+
+$('#id_estudiante').select2({ width: '100%' });
+$('#id_equipo').select2({ width: '100%' });
+$('#id_materia').select2({ width: '100%' });
+
+
+</script>
+
+{% endblock content %}
+
+{% block scriptbase %}
+       
+{% endblock scriptbase %}
