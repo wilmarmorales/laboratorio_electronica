@@ -10,8 +10,9 @@ Pasos Instalación:
 5. Creamos el entorno virtual con python -m virtualenv env
 6. Activamos el entorno virtual env\Source\activate
 7. Se instalan todos los paquetes necesarios que están en requirements.txt (pip install -r requirements.txt)
-8. Creamos la base de datos python manage.py makemigrations y posteriormente python manage.py migrate
-9. Creamos un superusuario python manage.py createsuperuser
+8. Compilamos la base de datos python manage.py makemigrations 
+9. Posteriormente migramos la base de datos python manage.py migrate
+10. Creamos un superusuario python manage.py createsuperuser
 
 Pasos para iniciar el aplicativo:
 
