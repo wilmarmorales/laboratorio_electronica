@@ -16,5 +16,6 @@ Pasos Instalación:
 
 Pasos para iniciar el aplicativo:
 
-1. Iniciamos el servidor python manage.py runserver
-2. En el navegador iniciamos http://localhost:8000
+1. Activamos el entorno virtual env\Scripts\activate
+2. Iniciamos el servidor python manage.py runserver
+3. En el navegador iniciamos http://localhost:8000
