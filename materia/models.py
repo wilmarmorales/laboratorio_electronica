@@ -26,10 +26,10 @@ class Materia(models.Model):
 
     def get_absolute_url(self):
         return self.url
-    
+
 
     def __str__(self):
-        return "{} - {}".format(self.materia, self.grupo)
+        return self.nombre
 
 
 class Estudiante(models.Model):
