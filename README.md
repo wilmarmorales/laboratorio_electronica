@@ -8,7 +8,7 @@ Pasos Instalación:
 3. Clonar el repositorio https://github.com/wilmarmorales/laboratorio_electronica descargar como zip.
 4. Se descomprime el zip donde va quedar la aplicación.
 5. Creamos el entorno virtual con python -m virtualenv env
-6. Activamos el entorno virtual env\Source\activate
+6. Activamos el entorno virtual env\Scripts\activate
 7. Se instalan todos los paquetes necesarios que están en requirements.txt (pip install -r requirements.txt)
 8. Compilamos la base de datos python manage.py makemigrations equipo login materia prestamo
 9. Posteriormente migramos la base de datos python manage.py migrate
