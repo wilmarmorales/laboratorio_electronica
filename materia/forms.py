@@ -9,15 +9,15 @@ class MateriaForm(forms.ModelForm):
         widgets = {
             'materia': forms.TextInput(attrs={
                 "autocomplete": "off", "type": "text", "class": "form-control", "id": "materia",
-                "placeholder": "Osciloscopio",
+                "placeholder": "Dimensionamiento de Sistemas Autonomos Eólicos y Fotovoltaicos",
             }),
             'grupo': forms.TextInput(attrs={
                 "autocomplete": "off", "type": "text", "class": "form-control", "id": "grupoMateria",
-                "placeholder": "Osciloscopio",
+                "placeholder": "A",
             }),
             'profesor': forms.TextInput(attrs={
                 "autocomplete": "off", "type": "text", "class": "form-control", "id": "profesorMateria",
-                "placeholder": "Osciloscopio",
+                "placeholder": "Xxxxx Xxxxx",
             }),
         }
     
@@ -29,11 +29,11 @@ class EstudianteForm(forms.ModelForm):
         widgets = {
             'nombre': forms.TextInput(attrs={
                 "autocomplete": "off", "type": "text", "class": "form-control", "id": "nombreEstudiante",
-                "placeholder": "Osciloscopio",
+                "placeholder": "Xxxx Xxxx",
             }),
             'codigo': forms.TextInput(attrs={
                 "autocomplete": "off", "type": "text", "class": "form-control", "id": "codigoEstudiante",
-                "placeholder": "Osciloscopio",
+                "placeholder": "123456789",
             }),
         }
         
